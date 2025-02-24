@@ -18,8 +18,26 @@ def encode(message, key):
 
     return secret
 
-#def decode(message, key):
+def decode(message, key):
     #We will want to decode the message here.
+    return caesar_cipher(message, -key)
+
+def caesar_cipher(message, key):
+    alpha_upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    alpha_lower = "abcdefghijklmnopqrstuvwxyz"
+    result = ""
+
+    for letter in message:
+        if letter.isalpha():
+            if letter.isupper():
+                alpha = alpha_upper
+            else:
+                alpha = alpha_lower
+            spot = (alpha.find(letter) + key) % 26
+            result += alpha[spot]
+        else:
+            result += letter
+    return result
 
 def main():
     message = input("Enter a message: ")
@@ -27,8 +45,8 @@ def main():
 
     secret = encode(message, key)
     print ("Encrypted:", secret)
-    #plaintext = decode(secret, key)
-    #print ("Decrypted:", plaintext)
+    plaintext = decode(secret, key)
+    print ("Decrypted:", plaintext)
 
 
 if __name__ == '__main__':
